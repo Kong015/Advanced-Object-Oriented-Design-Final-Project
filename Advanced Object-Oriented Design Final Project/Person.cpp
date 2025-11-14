@@ -1,6 +1,19 @@
 #include "Person.h"
 
-void Person :: print() const
+// Constructors and Destructors 
+Person :: Person(string n) : name(n)
 {
-	cout << name << endl;
+
+}
+
+
+// Getters and Setters
+string Person::getName() const
+{
+	return name;
+}
+
+void Person::setName(string n)
+{
+	name = n;
 }
