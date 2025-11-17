@@ -8,7 +8,7 @@ class BankAccount {
     protected:
         int id;
     public:
-        BankAccount(double b = 0, int id);
+        BankAccount(double b = 0, int id = 0);
         void Withdraw(double v);
         void Deposit(double v);
         void PrintAccountSummary();
