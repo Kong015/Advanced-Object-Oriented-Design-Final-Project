@@ -21,9 +21,27 @@
     <ClCompile Include="Person.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BankAccount.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="User.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UserAccount.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Person.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BankAccount.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="User.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UserAccount.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

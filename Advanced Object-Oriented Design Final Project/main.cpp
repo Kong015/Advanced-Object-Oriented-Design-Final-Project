@@ -1,5 +1,4 @@
-#include <iostream>
-using namespace std;
+#include "UserAccount.h"
 
 void bankingPrompt();
 
@@ -12,7 +11,11 @@ int main()
 		cin >> userinput;
 		if (userinput == 1)
 		{
-
+			User u("string", "koing", "voss", "ethan");
+			UserAccount a("Checkings", 200.0, u);
+			a.print();
+			UserAccount b("Checkings", 200.0, u);
+			a.print();
 		}
 		else if (userinput == 2)
 		{
