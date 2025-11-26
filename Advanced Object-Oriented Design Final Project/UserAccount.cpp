@@ -34,6 +34,11 @@ unsigned int UserAccount::getNumofAccounts()
 	return numOfAccounts;
 }
 
+int UserAccount::getAccountID()
+{
+	return accountID;
+}
+
 unsigned int UserAccount::getAccountNumber() const
 {
 	return accountNumber;

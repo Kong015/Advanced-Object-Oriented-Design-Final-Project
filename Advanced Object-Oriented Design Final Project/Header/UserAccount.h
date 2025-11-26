@@ -26,6 +26,7 @@ class UserAccount
 
 		// Getters and setters
 		static unsigned int getNumofAccounts();
+		static int getAccountID();
 		unsigned int getAccountNumber() const;
 		string getAccountType() const;
 		double getBalance() const;
