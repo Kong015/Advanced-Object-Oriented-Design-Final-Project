@@ -5,13 +5,6 @@
 void bankingPrompt();
 
 int main() {
-	// Register existing users
-	
-
-
-
-
-
 	int userinput = 0;
 	while (userinput != 4) {
 		bankingPrompt();
@@ -34,10 +27,11 @@ int main() {
 						size_t pos2 = line.find(',', pos + 1);
 						size_t pos3 = line.find(',', pos2 + 1);
 						string accountID = line.substr(0, pos);
-						string name = line.substr(pos + 1, pos2 - pos - 1);
-						string password = line.substr(pos2 + 1, pos3 - pos2 - 1);
+						string fileName = line.substr(pos + 1, pos2 - pos - 1);
+						string filePassword = line.substr(pos2 + 1, pos3 - pos2 - 1);
+						cout << "Username: " << fileName << ", Password: " << filePassword << endl;
 
-						if (username == name && password == password) {
+						if (username == fileName && password == filePassword) {
 							cout << "Login Successful!" << endl;
 							break;
 						} else {
@@ -48,11 +42,11 @@ int main() {
 
 				// For testing purposes, create a dummy user and account
 
-				User u("string", "koing", "voss", "ethan");
-				UserAccount a("Checkings", 200.0, u);
-				a.print();
-				UserAccount b("Checkings", 200.0, u);
-				a.print();
+				//User u("string", "koing", "voss", "ethan");
+				//UserAccount a("Checkings", 200.0, u);
+				//a.print();
+				//UserAccount b("Checkings", 200.0, u);
+				//a.print();
 				break;
 			}
 			case 2: {
