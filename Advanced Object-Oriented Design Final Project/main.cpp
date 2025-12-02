@@ -18,6 +18,36 @@ int main() {
 		cin >> userinput;
 		switch (userinput) {
 			case 1: {
+				cout << "Username: ";
+				string username;
+				cin >> username;
+
+				cout << "Password: ";
+				string password;
+				cin >> password;
+
+				std::ifstream inFile("Users.txt");
+				if (inFile.is_open()) {
+					string line;
+					while(std::getline(inFile, line)) {
+						size_t pos = line.find(',');
+						size_t pos2 = line.find(',', pos + 1);
+						size_t pos3 = line.find(',', pos2 + 1);
+						string accountID = line.substr(0, pos);
+						string name = line.substr(pos + 1, pos2 - pos - 1);
+						string password = line.substr(pos2 + 1, pos3 - pos2 - 1);
+
+						if (username == name && password == password) {
+							cout << "Login Successful!" << endl;
+							break;
+						} else {
+							cout << "Login Failed!" << endl;
+						}
+					}
+				}
+
+				// For testing purposes, create a dummy user and account
+
 				User u("string", "koing", "voss", "ethan");
 				UserAccount a("Checkings", 200.0, u);
 				a.print();
@@ -33,6 +63,10 @@ int main() {
 				string name;
 				cin >> name;
 
+				cout << "Password: ";
+				string password;
+				cin >> password;
+
 				cout << "Address: ";
 				string address;
 				cin >> address;
@@ -45,7 +79,7 @@ int main() {
 				string phone;
 				cin >> phone;
 
-				User newUser(name, address, email, phone);
+				User newUser(name, password, address, email);
 
 				cout << "Account Type: ";
 				string accountType;
@@ -56,7 +90,7 @@ int main() {
 				// Users.txt format: accountID,name,address,email,phone,accountType,balance
 				ofstream outFile("Users.txt", ios::app);
 				if (outFile.is_open()) {
-					outFile << UserAccount::getAccountID() << "," << name << "," << address << "," << email << "," << phone << "," << accountType << ",0.0" << endl;
+					outFile << UserAccount::getAccountID() << "," << name << "," << address << "," << email << "," << accountType << ",0.0" << endl;
 					outFile.close();
 					cout << "Account Created Successfully!" << endl;
 				} else {

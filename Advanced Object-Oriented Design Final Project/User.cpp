@@ -1,7 +1,7 @@
 #include "User.h"
 
 // Constructors and Destructors 
-User::User(string m, string a, string e, string p) : Person(m), address(a), email(e), phone(p)
+User::User(string m, string p, string a, string e) : Person(m), password(p), address(a), email(e)
 {
 	
 }
@@ -13,7 +13,6 @@ void User :: print() const
 	cout << getName() << endl;
 	cout << address << endl;
 	cout << email << endl;
-	cout << phone << endl;
 } 
 
 
@@ -36,14 +35,4 @@ string User::getEmail() const
 void User::setEmail(string e)
 {
 	email = e;
-}
-
-string User::getPhone() const
-{
-	return phone;
-}
-
-void User::setPhone(string p)
-{
-	phone = p;
 }
