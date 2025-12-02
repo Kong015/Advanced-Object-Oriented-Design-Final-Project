@@ -6,10 +6,9 @@ unsigned int UserAccount::accountID = 0;
 
 
 UserAccount::UserAccount(string accType, double bal, User u) :
-	accountType(accType), balance(bal), user(u)
+	accountType(accType), balance(bal), user(u), BankAccount(bal, ++accountID)
 {
 	numOfAccounts++;
-	accountID++;
 	accountNumber = accountID;
 }
 

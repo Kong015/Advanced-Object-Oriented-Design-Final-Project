@@ -9,10 +9,27 @@ BankAccount::BankAccount(double b, int id) {
     this->id = id;
 }
 
+BankAccount::BankAccount() {
+    std::cout << "Default Constructor" << std::endl;
+    balance = 0.0;
+}
+
+BankAccount::BankAccount(const BankAccount& other) {
+    std::cout << "Copy Constructor" << std::endl;
+    balance = other.balance;
+    id = other.id;
+}
+
 void BankAccount::Withdraw(double v) {
-    std::ofstream outFile("user_ " + std::to_string(id) + ".txt", std::ios::app);
+    if (v > balance) {
+        std::cerr << "Insufficient funds for withdrawal." << std::endl;
+        return;
+    }
+
+    std::ofstream outFile("user_" + std::to_string(id) + ".txt", std::ios::app);
     if (outFile.is_open()) {
         outFile << "Withdraw of " << v << " successful!" << std::endl;
+        balance -= v;
         outFile.close();
     } else {
         std::cerr << "Unable to open file for writing." << std::endl;
@@ -21,7 +38,7 @@ void BankAccount::Withdraw(double v) {
 }
 
 void BankAccount::Deposit(double v) {
-    std::ofstream outFile("user_ " + std::to_string(id) + ".txt", std::ios::app);
+    std::ofstream outFile("user_" + std::to_string(id) + ".txt", std::ios::app);
     if (outFile.is_open()) {
         outFile << "Deposit of " << v << " successful!" << std::endl;
         balance += v;
@@ -32,7 +49,7 @@ void BankAccount::Deposit(double v) {
 }
 
 void BankAccount::PrintAccountSummary() {
-    std::ifstream inFile("user_ " + std::to_string(id) + ".txt", std::ios::app);
+    std::ifstream inFile("user_" + std::to_string(id) + ".txt", std::ios::in);
     if (inFile.is_open()) {
         std::string line;
         while (std::getline(inFile, line)) {
@@ -40,6 +57,14 @@ void BankAccount::PrintAccountSummary() {
         }
         inFile.close();
     } else {
-        std::cerr << "Unable to open file for writing." << std::endl;
+        std::cerr << "Unable to open file for reading." << std::endl;
     }
+}
+
+double BankAccount::getBalance() {
+    return balance;
+}
+
+int BankAccount::getID() {
+    return id;
 }

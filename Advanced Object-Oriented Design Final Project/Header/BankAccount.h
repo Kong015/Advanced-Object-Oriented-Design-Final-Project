@@ -8,10 +8,14 @@ class BankAccount {
     protected:
         int id;
     public:
+        BankAccount();
         BankAccount(double b = 0, int id = 0);
+        BankAccount(const BankAccount& other);
         void Withdraw(double v);
         void Deposit(double v);
         void PrintAccountSummary();
+        double getBalance();
+        int getID();
 };
 
 #endif

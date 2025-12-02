@@ -1,8 +1,9 @@
 #ifndef USERACCOUNT_H
 #define USERACCOUNT_H
 #include "User.h"
+#include "BankAccount.h"
 
-class UserAccount
+class UserAccount : public BankAccount
 {
 	private:
 		static unsigned int numOfAccounts; // keeps track of the amount of accounts created
