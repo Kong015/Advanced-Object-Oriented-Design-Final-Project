@@ -6,7 +6,10 @@ void bankingPrompt();
 
 int main() {
 	int userinput = 0;
-	while (userinput != 4) {
+	bool loginSuccess = false;
+	bool isManager = false;
+
+	while (userinput != 4 && loginSuccess == false) {
 		bankingPrompt();
 		cin >> userinput;
 		switch (userinput) {
@@ -36,7 +39,7 @@ int main() {
 
 							User u(fileName, filePassword);
 							UserAccount a("", 0.0, u);
-
+							loginSuccess = true;
 							break;
 						} else {
 							cout << "Login Failed!" << endl;
@@ -73,7 +76,7 @@ int main() {
 				UserAccount(accountType, 0.0, newUser);
 
 				// Create a new line in the Users.txt file with the user's information
-				// Users.txt format: accountID,name,address,email,phone,accountType,balance
+				// Users.txt format: accountID,name,accountType,balance
 				ofstream outFile("Users.txt", ios::app);
 				if (outFile.is_open()) {
 					outFile << UserAccount::getAccountID() << "," << name << "," << accountType << ",0.0" << endl;
@@ -105,7 +108,6 @@ int main() {
 				cin >> password;
 				string fileUsername;
 				string filePassword;
-				bool loginSuccess = false;
 				ifstream inFile("Managers.txt");
 				// Manager.txt file format: username,password
 				while (inFile.is_open()) {
@@ -114,6 +116,7 @@ int main() {
 					if (username == fileUsername && password == filePassword) {
 						cout << "Login Successful!" << endl;
 						loginSuccess = true;
+						isManager = true;
 						break;
 					}
 				}
@@ -133,6 +136,47 @@ int main() {
 			}
 		}
 	}
+
+	// After user logs in successfully, present them with their banking options
+	// Know if user or manager logged in
+	if (loginSuccess && isManager) {
+		cout << "Welcome to the Banking System!" << endl;
+		// Further banking operations would go here
+	} else if (loginSuccess) {
+		cout << "Welcome to the Banking System!" << endl;
+
+		int bankingOption;
+		
+		while (bankingOption != 4) {
+			cout << "1. Deposit" << endl;
+			cout << "2. Withdraw" << endl;
+			cout << "3. Print Account Summary" << endl;
+			cout << "4. Exit" << endl;
+			cin >> bankingOption;
+			switch (bankingOption) {
+				case 1: {
+					cout << "Enter amount to deposit: ";
+					double amount;
+					cin >> amount;
+					break;
+				}
+				case 2: {
+					cout << "Enter amount to withdraw: ";
+					double amount;
+					cin >> amount;
+					break;
+				}
+				case 3: {
+					break;
+				}
+				default: {
+					cout << "ERROR: Input a valid banking option." << endl;
+					break;
+				}
+			}
+		}
+	}
+
 	return 0;
 }
 
