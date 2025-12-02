@@ -33,6 +33,10 @@ int main() {
 
 						if (username == fileName && password == filePassword) {
 							cout << "Login Successful!" << endl;
+
+							User u(fileName, filePassword);
+							UserAccount a("", 0.0, u);
+
 							break;
 						} else {
 							cout << "Login Failed!" << endl;
@@ -61,19 +65,7 @@ int main() {
 				string password;
 				cin >> password;
 
-				cout << "Address: ";
-				string address;
-				cin >> address;
-
-				cout << "Email: ";
-				string email;
-				cin >> email;
-
-				cout << "Phone: ";
-				string phone;
-				cin >> phone;
-
-				User newUser(name, password, address, email);
+				User newUser(name, password);
 
 				cout << "Account Type: ";
 				string accountType;
@@ -84,7 +76,7 @@ int main() {
 				// Users.txt format: accountID,name,address,email,phone,accountType,balance
 				ofstream outFile("Users.txt", ios::app);
 				if (outFile.is_open()) {
-					outFile << UserAccount::getAccountID() << "," << name << "," << address << "," << email << "," << accountType << ",0.0" << endl;
+					outFile << UserAccount::getAccountID() << "," << name << "," << accountType << ",0.0" << endl;
 					outFile.close();
 					cout << "Account Created Successfully!" << endl;
 				} else {
