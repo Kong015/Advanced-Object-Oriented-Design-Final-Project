@@ -1,1 +1,3 @@
-Account Created for bruce with Account ID: 1
+Account Created for bryce with Account ID: 1
+Deposit of 100 successful! New balance: 100
+Withdraw of 50 successful! New balance: 50

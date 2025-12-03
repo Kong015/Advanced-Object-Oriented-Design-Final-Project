@@ -41,7 +41,7 @@ void UserAccount::createAccount()
 
 
 	//check if username already exists
-	ifstream checkFile(userFileName);
+	ifstream checkFile("Users/" + userFileName);
 	if (checkFile.is_open()) 
 	{
 		cout << "ERROR: Username already exists. Choose a different name.\n";
@@ -49,8 +49,8 @@ void UserAccount::createAccount()
 		return;
 	}
 
-	//create user file
-	ofstream outFile(userFileName, ios::app);
+	//create user file	
+	ofstream outFile("Users/" + userFileName, ios::app);
 	if (outFile.is_open()) 
 	{
 		outFile << UserAccount::getAccountID() << "," 
@@ -69,7 +69,7 @@ void UserAccount::createAccount()
 	}
 
 	// Create a new file in the Transactions directory "user_<accountID>.txt"
-	ofstream transFile("user_" + to_string(UserAccount::getAccountID()) + ".txt");
+	ofstream transFile("Transactions/user_" + to_string(UserAccount::getAccountID()) + ".txt");
 	if (transFile.is_open()) 
 	{
 		transFile << "Account Created for " << name << " with Account ID: " << UserAccount::getAccountID() << endl;
@@ -86,7 +86,7 @@ bool UserAccount::login(const string& username, const string& password)
 	string userFileName = username + ".txt";
 
 	// Check if the file exists
-	ifstream inFile(userFileName);
+	ifstream inFile("Users/" + userFileName);
 	if (!inFile.is_open()) 
 	{
 		cout << "Login Failed! Username not found" << endl;
@@ -132,7 +132,7 @@ bool UserAccount::login(const string& username, const string& password)
 
 void UserAccount::deleteAccount() const
 {
-	string userFileName = user.getUserName() + ".txt";
+	string userFileName = "Users/" + user.getUserName() + ".txt";
 	// Delete the user file
 	if (remove(userFileName.c_str()) != 0) 
 	{
@@ -144,7 +144,7 @@ void UserAccount::deleteAccount() const
 	}
 
 	// Delete the transaction file
-	string transFileName = "user_" + to_string(accountNumber) + ".txt";
+	string transFileName = "Transactions/user_" + to_string(accountNumber) + ".txt";
 	if (remove(transFileName.c_str()) != 0) 
 	{
 		cerr << "Error deleting transaction file." << endl;
@@ -157,8 +157,8 @@ void UserAccount::deleteAccount() const
 
 void UserAccount::refreshAccountData()
 {
-	string userFileName = user.getUserName() + ".txt";
-	ifstream inFile(userFileName);
+	string userFileName = "Users/" + user.getUserName() + ".txt";
+	ifstream inFile(userFileName, std::ios::in);
 	if (!inFile.is_open()) 
 	{
 		cerr << "Error opening user file for reading." << endl;

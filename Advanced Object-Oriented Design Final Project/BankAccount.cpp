@@ -26,13 +26,11 @@ void BankAccount::Withdraw(double v) {
         std::cerr << "Insufficient funds for withdrawal." << std::endl;
         return;
     }
-	balance -= v;
-    
 
-    std::ofstream outFile("user_" + std::to_string(id) + ".txt", std::ios::app);
+    std::ofstream outFile("Transactions/user_" + std::to_string(id) + ".txt", std::ios::app);
     if (outFile.is_open()) {
-        outFile << "Withdraw of " << v << " successful!" << std::endl;
         balance -= v;
+        outFile << "Withdraw of " << v << " successful! New balance: " << balance << std::endl;
         outFile.close();
     }
     else {
@@ -43,11 +41,10 @@ void BankAccount::Withdraw(double v) {
 
 void BankAccount::Deposit(double v) 
 {
-	balance += v;
-    std::ofstream outFile("user_" + std::to_string(id) + ".txt", std::ios::app);
+    std::ofstream outFile("Transactions/user_" + std::to_string(id) + ".txt", std::ios::app);
     if (outFile.is_open()) {
-        outFile << "Deposit of " << v << " successful!" << std::endl;
         balance += v;
+        outFile << "Deposit of " << v << " successful! New balance: " << balance << std::endl;
         outFile.close();
     }
     else {
@@ -57,7 +54,7 @@ void BankAccount::Deposit(double v)
 
 void BankAccount::PrintAccountSummary() const 
 {
-    std::ifstream inFile("user_" + std::to_string(id) + ".txt", std::ios::in);
+    std::ifstream inFile("Transactions/user_" + std::to_string(id) + ".txt", std::ios::in);
     if (inFile.is_open()) {
         std::string line;
         while (std::getline(inFile, line)) {
