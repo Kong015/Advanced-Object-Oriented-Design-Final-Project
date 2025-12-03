@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <cstdio>
 
 class UserAccount
 {
@@ -24,8 +25,11 @@ public:
 
 	// Program Functions
 	void createAccount();
+	void refreshAccountData();
 	void deleteAccount() const; 
-	void loadAccount() const;
+	void deposit(double amount);
+	void withdraw(double amount);
+	void printAccountSummary() const;
 	bool login(const string& username, const string& password);
 	void print() const;
 
@@ -38,6 +42,9 @@ public:
 	void setAccountType(string accountType);
 	void setBalance(double balance);
 };
+
+#endif 
+
 
 #endif 
 
