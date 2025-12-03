@@ -158,8 +158,9 @@ void UserAccount::deleteAccount() const
 void UserAccount::refreshAccountData()
 {
 	string userFileName = user.getUserName() + ".txt";
+	string fullPath = "Users/" + userFileName;
 	cout << "Refreshing account data from file: " << userFileName << endl;
-	ifstream inFile("Users/" + userFileName, std::ios::in);
+	ifstream inFile(fullPath, std::ios::in);
 	if (!inFile.is_open()) 
 	{
 		cerr << "Error opening user file for reading." << endl;
@@ -174,12 +175,41 @@ void UserAccount::refreshAccountData()
 	size_t pos4 = line.find(',', pos3 + 1);
 	size_t pos5 = line.find(',', pos4 + 1);
 
-	//string of the values from the file
+    // Replace balance with current account balance
+	string idStr = line.substr(0, pos);
+	string userStr = line.substr(pos + 1, pos2 - pos - 1);
+	string passStr = line.substr(pos2 + 1, pos3 - pos2 - 1);
+	string nameStr = line.substr(pos3 + 1, pos4 - pos3 - 1);
+	string typeStr = line.substr(pos4 + 1, pos5 - pos4 - 1);
 	string balStr = line.substr(pos5 + 1);
-	double bal = stod(balStr); // Convert string to double
-	cout << "refresh: " << bal << endl;
-	account.setBalance(bal);
+    double newBal = account.getBalance();
+
 	inFile.close();
+
+	cout << idStr << ","
+		 << userStr << ","
+		 << passStr << ","
+		 << nameStr << ","
+		 << typeStr << ","
+		 << newBal << endl;
+
+    // Rewrite the line with updated balance
+    ofstream outFile(fullPath, ios::out | ios::trunc);
+    if (!outFile.is_open()) {
+        cerr << "Error opening user file for writing." << endl;
+        return;
+    }
+
+    outFile << idStr << ","
+            << userStr << ","
+            << passStr << ","
+            << nameStr << ","
+            << typeStr << ","
+            << newBal << endl;
+
+    outFile.close();
+
+    cout << "Account data refreshed with new balance: " << newBal << endl;
 }
 
 void UserAccount::print() const

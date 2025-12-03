@@ -4,3 +4,13 @@ Withdraw of 50 successful! New balance: 50
 Deposit of 100 successful! New balance: 100
 Deposit of 50 successful! New balance: 50
 Deposit of 100 successful! New balance: 100
+Deposit of 100 successful! New balance: 100
+Deposit of 100 successful! New balance: 100
+Deposit of 100 successful! New balance: 100
+Deposit of 150 successful! New balance: 250
+Deposit of 100 successful! New balance: 100
+Deposit of 300 successful! New balance: 400
+Deposit of 100 successful! New balance: 100
+Deposit of 100 successful! New balance: 100
+Deposit of 50 successful! New balance: 150
+Withdraw of 10 successful! New balance: 140
