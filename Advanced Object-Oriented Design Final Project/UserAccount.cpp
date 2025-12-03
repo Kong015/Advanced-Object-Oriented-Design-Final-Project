@@ -104,12 +104,12 @@ bool UserAccount::login(const string& username, const string& password)
 	size_t pos5 = line.find(',', pos4 + 1);
 
 	//string of the values from the file
-	string idStr = line.substr(0, pos);
-	string fileUser = line.substr(pos2 + 1, pos2 - pos - 1);
+	string idStr    = line.substr(0, pos);
+	string fileUser = line.substr(pos + 1, pos2 - pos - 1);
 	string filePass = line.substr(pos2 + 1, pos3 - pos2 - 1);
 	string fileName = line.substr(pos3 + 1, pos4 - pos3 - 1);
 	string acctType = line.substr(pos4 + 1, pos5 - pos4 - 1);
-	string balStr = line.substr(pos5 + 1);
+	string balStr   = line.substr(pos5 + 1);
 
 	if (password != filePass) {
 		cout << "Login Failed! Incorrect password" << endl;
@@ -157,8 +157,9 @@ void UserAccount::deleteAccount() const
 
 void UserAccount::refreshAccountData()
 {
-	string userFileName = "Users/" + user.getUserName() + ".txt";
-	ifstream inFile(userFileName, std::ios::in);
+	string userFileName = user.getUserName() + ".txt";
+	cout << "Refreshing account data from file: " << userFileName << endl;
+	ifstream inFile("Users/" + userFileName, std::ios::in);
 	if (!inFile.is_open()) 
 	{
 		cerr << "Error opening user file for reading." << endl;
