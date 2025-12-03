@@ -4,16 +4,22 @@
 
 class User : public Person
 {
-	private:
-		string name;
-		string password;
+private:
+	string userName;
+	string password;
 
-	public:
-		// Constructors and Destructors 
-		User(string name, string password);
+public:
+	// Constructors and Destructors 
+	User();
+	User(string name, string username,  string password);
 
-		// Program Functions
-		void print() const;
+	// Program Functions
+	void print() const;
+	// Getters and setters
+	string getUserName() const;
+	string getPassword() const;
+	void setUserName(string userName);
+	void setPassword(string password);
 };
 
 #endif
