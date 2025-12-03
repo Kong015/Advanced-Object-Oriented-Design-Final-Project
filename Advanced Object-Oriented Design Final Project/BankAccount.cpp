@@ -31,10 +31,11 @@ void BankAccount::Withdraw(double v) {
         outFile << "Withdraw of " << v << " successful!" << std::endl;
         balance -= v;
         outFile.close();
-    } else {
+    }
+    else {
         std::cerr << "Unable to open file for writing." << std::endl;
     }
-    
+
 }
 
 void BankAccount::Deposit(double v) {
@@ -43,7 +44,8 @@ void BankAccount::Deposit(double v) {
         outFile << "Deposit of " << v << " successful!" << std::endl;
         balance += v;
         outFile.close();
-    } else {
+    }
+    else {
         std::cerr << "Unable to open file for writing." << std::endl;
     }
 }
@@ -56,15 +58,23 @@ void BankAccount::PrintAccountSummary() {
             std::cout << line << std::endl;
         }
         inFile.close();
-    } else {
+    }
+    else {
         std::cerr << "Unable to open file for reading." << std::endl;
     }
 }
 
-double BankAccount::getBalance() {
+double BankAccount::getBalance() const
+{
     return balance;
 }
 
-int BankAccount::getID() {
+int BankAccount::getID() const
+{
     return id;
+}
+
+void BankAccount::setBalance(double b) 
+{
+    balance = b;
 }
