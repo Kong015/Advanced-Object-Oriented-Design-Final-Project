@@ -4,16 +4,19 @@
 
 void bankingPrompt();
 
-int main() {
+int main() 
+{
 	int userinput = 0;
 	bool loginSuccess = false;
 	bool isManager = false;
 
-	while (userinput != 4 && loginSuccess == false) {
+	while (userinput != 4 && loginSuccess == false) 
+	{
 		bankingPrompt();
 		cin >> userinput;
-		switch (userinput) {
-		case 1: 
+		switch (userinput)
+		{
+		case 1:
 		{
 			cout << "Username: ";
 			string username;
@@ -23,16 +26,76 @@ int main() {
 			string password;
 			cin >> password;
 
-			UserAccount temp;  // empty object used a UserAccount that hold the value of the txt file if login is successful
-			if (temp.login(username, password)) 
+			UserAccount temp;  // empty object used a UserAccount that holds the value of the txt file if login is successful
+			if (temp.login(username, password))
 			{
-				//localAccount = temp; // you can now use localAccount for further operations  
-				//hasLocalAccount = true; // indicate that you have created a local account
-				loginSuccess = true;
+
+				// After user logs in successfully, present them with their banking options
+				int bankingOption = 0;
+
+				while (bankingOption != 6)
+				{
+
+					cout << "---- Banking Menu ----" << endl;
+					cout << "1. Deposit" << endl;
+					cout << "2. Withdraw" << endl;
+					cout << "3. Delete Account" << endl;
+					cout << "4. Print Account Information" << endl;
+					cout << "5. Print Account Summary" << endl;
+					cout << "6. Logout" << endl;
+					cin >> bankingOption;
+
+					switch (bankingOption)
+					{
+					case 1:
+					{
+						cout << "Enter amount to deposit: ";
+						double amount;
+						cin >> amount;
+						temp.deposit(amount);
+						cout << temp.getBalance() << endl;
+						temp.refreshAccountData();
+						break;
+					}
+					case 2:
+					{
+						cout << "Enter amount to withdraw: ";
+						double amount;
+						cin >> amount;
+						temp.withdraw(amount);
+						temp.refreshAccountData();
+						break;
+					}
+					case 3:
+					{
+						temp.deleteAccount();
+						break;
+					}
+					case 4:
+					{
+						temp.print();
+						break;
+					}
+					case 5:
+					{
+						temp.printAccountSummary();
+						break;
+					}
+					case 6:
+					{
+						cout << "Logging out\n";
+						break;
+					}
+					default:
+						cout << "Invalid option\n";
+						break;
+					}
+				}
 			}
 			break;
 		}
-		case 2: {
+		case 2:
+		{
 			// Create a new User object with the provided information
 			cout << "Name: ";
 			string name;
@@ -57,7 +120,8 @@ int main() {
 
 			break;
 		}
-		case 3: {
+		case 3:
+		{
 			// Prompt the manager for their login information
 			// Read Managers.txt file and verify login information
 			string username;
@@ -86,65 +150,26 @@ int main() {
 			inFile.close();
 			break;
 		}
-		case 4: {
+		case 4:
+		{
 			cout << "Exiting Program..." << endl;
 			break;
 		}
-		default: {
+		default:
+		{
 			cout << "ERROR: Input a Number 1-4." << endl;
 			break;
 		}
 		}
 	}
-
-	// After user logs in successfully, present them with their banking options
-	// Know if user or manager logged in
-	if (loginSuccess && isManager) {
-		cout << "Welcome to the Banking System!" << endl;
-		// Further banking operations would go here
-	}
-	else if (loginSuccess) {
-		cout << "Welcome to the Banking System!" << endl;
-
-		int bankingOption = 0;
-
-		while (bankingOption != 4) {
-			cout << "1. Deposit" << endl;
-			cout << "2. Withdraw" << endl;
-			cout << "3. Print Account Summary" << endl;
-			cout << "4. Exit" << endl;
-			cin >> bankingOption;
-			switch (bankingOption) {
-			case 1: {
-				cout << "Enter amount to deposit: ";
-				double amount;
-				cin >> amount;
-				break;
-			}
-			case 2: {
-				cout << "Enter amount to withdraw: ";
-				double amount;
-				cin >> amount;
-				break;
-			}
-			case 3: {
-				break;
-			}
-			default: {
-				cout << "ERROR: Input a valid banking option." << endl;
-				break;
-			}
-			}
-		}
-	}
-
-	return 0;
 }
 
 void bankingPrompt()
 {
+	cout << "---- Login Menu ----" << endl;
 	cout << "1. User Login" << endl;
 	cout << "2. Create Account" << endl;
 	cout << "3. Manager Login" << endl;
 	cout << "4. Exit" << endl;
 }
+
