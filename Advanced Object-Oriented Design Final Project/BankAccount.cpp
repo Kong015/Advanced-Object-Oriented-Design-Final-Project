@@ -21,10 +21,13 @@ BankAccount::BankAccount(const BankAccount& other) {
 }
 
 void BankAccount::Withdraw(double v) {
-    if (v > balance) {
+    if (v > balance) 
+    {
         std::cerr << "Insufficient funds for withdrawal." << std::endl;
         return;
     }
+	balance -= v;
+    
 
     std::ofstream outFile("user_" + std::to_string(id) + ".txt", std::ios::app);
     if (outFile.is_open()) {
@@ -38,7 +41,9 @@ void BankAccount::Withdraw(double v) {
 
 }
 
-void BankAccount::Deposit(double v) {
+void BankAccount::Deposit(double v) 
+{
+	balance += v;
     std::ofstream outFile("user_" + std::to_string(id) + ".txt", std::ios::app);
     if (outFile.is_open()) {
         outFile << "Deposit of " << v << " successful!" << std::endl;
@@ -50,7 +55,8 @@ void BankAccount::Deposit(double v) {
     }
 }
 
-void BankAccount::PrintAccountSummary() {
+void BankAccount::PrintAccountSummary() const 
+{
     std::ifstream inFile("user_" + std::to_string(id) + ".txt", std::ios::in);
     if (inFile.is_open()) {
         std::string line;
