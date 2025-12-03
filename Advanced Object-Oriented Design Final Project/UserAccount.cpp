@@ -69,7 +69,7 @@ void UserAccount::createAccount()
 	}
 
 	// Create a new file in the Transactions directory "user_<accountID>.txt"
-	ofstream transFile("Transactions/" + username + "_" + to_string(UserAccount::getAccountID()) + ".txt");
+	ofstream transFile("user_" + to_string(UserAccount::getAccountID()) + ".txt");
 	if (transFile.is_open()) 
 	{
 		transFile << "Account Created for " << name << " with Account ID: " << UserAccount::getAccountID() << endl;
@@ -130,10 +130,61 @@ bool UserAccount::login(const string& username, const string& password)
 	return true;
 }
 
+void UserAccount::deleteAccount() const
+{
+	string userFileName = user.getUserName() + ".txt";
+	// Delete the user file
+	if (remove(userFileName.c_str()) != 0) 
+	{
+		cerr << "Error deleting user file." << endl;
+	}
+	else 
+	{
+		cout << "User file deleted successfully." << endl;
+	}
+
+	// Delete the transaction file
+	string transFileName = "user_" + to_string(accountNumber) + ".txt";
+	if (remove(transFileName.c_str()) != 0) 
+	{
+		cerr << "Error deleting transaction file." << endl;
+	}
+	else 
+	{
+		cout << "Transaction file deleted successfully." << endl;
+	}
+}
+
+void UserAccount::refreshAccountData()
+{
+	string userFileName = user.getUserName() + ".txt";
+	ifstream inFile(userFileName);
+	if (!inFile.is_open()) 
+	{
+		cerr << "Error opening user file for reading." << endl;
+		return;
+	}
+	string line;
+	getline(inFile, line);
+	// Find positions of commas
+	size_t pos = line.find(',');
+	size_t pos2 = line.find(',', pos + 1);
+	size_t pos3 = line.find(',', pos2 + 1);
+	size_t pos4 = line.find(',', pos3 + 1);
+	size_t pos5 = line.find(',', pos4 + 1);
+
+	//string of the values from the file
+	string balStr = line.substr(pos5 + 1);
+	double bal = stod(balStr); // Convert string to double
+	cout << "refresh: " << bal << endl;
+	account.setBalance(bal);
+	inFile.close();
+}
 
 void UserAccount::print() const
 {
 	cout << accountNumber << endl;
+	cout << user.getName() << endl;
 	cout << accountType << endl;
 	cout << account.getBalance() << endl;
 	user.print();
@@ -174,4 +225,17 @@ double UserAccount::getBalance() const
 void UserAccount::setBalance(double bal)
 {
 	account.setBalance(bal);
+}
+
+void UserAccount::deposit(double amount)
+{
+	account.Deposit(amount);
+}
+void UserAccount::withdraw(double amount)
+{
+	account.Withdraw(amount);
+}
+void UserAccount::printAccountSummary() const
+{
+	account.PrintAccountSummary();
 }
