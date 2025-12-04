@@ -18,6 +18,7 @@ public:
     double getBalance() const;
     int getID() const;
     void setBalance(double b);
+    void setID(int newID);
 };
 
 #endif

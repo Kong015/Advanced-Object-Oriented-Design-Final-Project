@@ -81,3 +81,8 @@ void BankAccount::setBalance(double b)
 {
     balance = b;
 }
+
+void BankAccount::setID(int newID)
+{
+    id = newID;
+}
