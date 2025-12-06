@@ -1,7 +1,7 @@
 #include "Person.h"
 
 // Constructors and Destructors 
-Person :: Person(string n) : name(n)
+Person::Person(string n) : name(n)
 {
 
 }

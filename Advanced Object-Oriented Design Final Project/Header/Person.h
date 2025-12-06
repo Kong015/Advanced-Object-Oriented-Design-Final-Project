@@ -7,19 +7,19 @@ using namespace std;
 
 class Person
 {
-    private:
-        string name;
+private:
+    string name;
 
-    public:
-        // Constructors and Destructors 
-        Person(string name);
+public:
+    // Constructors and Destructors 
+    Person(string name);
 
-        // Getters and setters
-        string getName() const;
-        void setName(string name);
+    // Getters and setters
+    string getName() const;
+    void setName(string name);
 
-        // Abstract function
-        virtual void print() const = 0;
+    // Abstract function
+    virtual void print() const = 0;
 };
 
 #endif
