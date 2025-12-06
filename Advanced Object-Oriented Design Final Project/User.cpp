@@ -5,6 +5,7 @@ User::User() : Person(""), userName(""), password("")
 {
 
 }
+
 User::User(string n, string u, string p) : Person(n), userName(u), password(p)
 {
 
