@@ -6,7 +6,6 @@ User::User(string m, string a, string e, string p) : Person(m), address(a), emai
 	
 }
 
-
 // Program Functions
 void User :: print() const
 {
