@@ -10,7 +10,8 @@ void managerConsole();
 int main() 
 {
 	int userinput = 0;
-
+	bool managerLogin = false; // to track if manager login is successful
+	
 	while (userinput != 4) 
 	{
 		bankingPrompt();
@@ -140,7 +141,6 @@ int main()
 			ifstream inFile("Managers.txt");
 			// Manager.txt file format: username,password
 
-			bool loginSuccess = false;
 			while (inFile.is_open()) 
 			{
 				getline(inFile, fileUsername, ',');
@@ -149,11 +149,17 @@ int main()
 				{
 					cout << "Login Successful!" << endl;
 					managerConsole();
-					loginSuccess = true;
+					managerLogin = true;
 					break;
 				}
+				else
+				{
+					managerLogin = false;
+					break;
+				}
+				
 			}
-			if (!loginSuccess) 
+			if (!managerLogin) 
 			{
 				cout << "Login Failed!" << endl;
 			}
