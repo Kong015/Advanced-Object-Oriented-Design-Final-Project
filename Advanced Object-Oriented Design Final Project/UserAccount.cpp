@@ -15,7 +15,6 @@ UserAccount::UserAccount() :
 UserAccount::UserAccount(string accType, double bal, User u) :
 	accountType(accType), user(u)
 {
-	numOfAccounts++;
 	accountNumber++;
 	accountID = accountNumber;
 	account = BankAccount(bal, accountID);
@@ -49,7 +48,6 @@ void UserAccount::createAccount()
 		cout << "ERROR: Username already exists. Choose a different name.\n";
 		checkFile.close();
 		UserAccount::accountNumber--; //decrement account number since account creation failed
-		UserAccount::numOfAccounts--; //decrement number of accounts since account creation failed
 		return;
 	}
 
@@ -136,7 +134,7 @@ bool UserAccount::login(const string& username, const string& password)
 	return true;
 }
 
-void UserAccount::deleteAccount() const
+void UserAccount::deleteAccount()
 {
 	string userFileName = "Users/" + user.getUserName() + ".txt";
 

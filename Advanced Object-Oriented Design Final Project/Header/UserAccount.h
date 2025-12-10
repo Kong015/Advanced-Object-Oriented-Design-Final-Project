@@ -26,7 +26,7 @@ public:
 	// Program Functions
 	void createAccount();
 	void refreshAccountData();
-	void deleteAccount() const; 
+	void deleteAccount(); 
 	void deposit(double amount);
 	void withdraw(double amount);
 	void printAccountSummary() const;
