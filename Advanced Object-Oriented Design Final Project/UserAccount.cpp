@@ -16,7 +16,8 @@ UserAccount::UserAccount(string accType, double bal, User u) :
 	accountType(accType), user(u)
 {
 	numOfAccounts++;
-	accountID = accountNumber++;
+	accountNumber++;
+	accountID = accountNumber;
 	account = BankAccount(bal, accountID);
 }
 
@@ -56,7 +57,7 @@ void UserAccount::createAccount()
 	ofstream outFile("Users/" + userFileName, ios::app);
 	if (outFile.is_open()) 
 	{
-		outFile << UserAccount::getAccountNumber() << "," 
+		outFile << accountID << "," 
 			<< username << "," 
 			<< password << ","
 			<< name << ","
@@ -72,10 +73,10 @@ void UserAccount::createAccount()
 	}
 
 	// Create a new file in the Transactions directory "user_<accountID>.txt"
-	ofstream transFile("Transactions/user_" + to_string(UserAccount::getAccountNumber()) + ".txt");
+	ofstream transFile("Transactions/user_" + to_string(accountID) + ".txt");
 	if (transFile.is_open()) 
 	{
-		transFile << "Account Created for " << name << " with Account ID: " << UserAccount::getAccountNumber() << endl;
+		transFile << "Account Created for " << name << " with Account ID: " << accountID << endl;
 	}
 	else 
 	{
