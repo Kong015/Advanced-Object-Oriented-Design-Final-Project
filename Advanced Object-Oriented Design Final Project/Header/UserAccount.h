@@ -11,8 +11,8 @@ class UserAccount
 {
 private:
 	static unsigned int numOfAccounts; // keeps track of the amount of accounts created
-	static unsigned int accountID; // keeps track of the account id (increase by 1 each account created)
-	unsigned int accountNumber;
+	static unsigned int accountNumber; // keeps track of the account id (increase by 1 each account created)
+	unsigned int accountID;
 	string accountType;
 	BankAccount account;
 	User user;
@@ -35,8 +35,8 @@ public:
 
 	// Getters and setters
 	static unsigned int getNumofAccounts();
-	static int getAccountID();
-	unsigned int getAccountNumber() const;
+	static unsigned int getAccountNumber();
+	unsigned int getAccountID() const;
 	string getAccountType() const;
 	double getBalance() const;
 	void setAccountType(string accountType);

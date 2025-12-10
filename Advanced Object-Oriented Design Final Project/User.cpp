@@ -20,7 +20,7 @@ User::User(const User& other) : Person(other.getName()), userName(other.userName
 void User::print() const
 {
 	cout << "Username: " << userName << endl;
-	cout << getName() << endl;
+	cout << "Name: " << getName() << endl;
 }
 
 // Getters and setters

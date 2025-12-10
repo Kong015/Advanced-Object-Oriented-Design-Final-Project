@@ -10,7 +10,7 @@ protected:
     int id;
 public:
     BankAccount();
-    BankAccount(double b = 0, int id = 0);
+    BankAccount(double b, int id);
     BankAccount(const BankAccount& other);
     void Withdraw(double v);
     void Deposit(double v);

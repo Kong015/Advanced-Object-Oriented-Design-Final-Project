@@ -2,21 +2,22 @@
 
 // Static member functions/variables
 unsigned int UserAccount::numOfAccounts = 0;
-unsigned int UserAccount::accountID = 0;
+unsigned int UserAccount::accountNumber = 0;
 
 
 // Constructors and Destructors
 UserAccount::UserAccount() : 
-	accountNumber(0), accountType(""), user(), account(0.0, 0)
+	accountID(0), accountType(""), user(), account(0.0, 0)
 {
 	
 }
 
 UserAccount::UserAccount(string accType, double bal, User u) :
-	accountType(accType), user(u), account(bal, ++accountID)
+	accountType(accType), user(u)
 {
 	numOfAccounts++;
-	accountNumber = accountID;
+	accountID = accountNumber++;
+	account = BankAccount(bal, accountID);
 }
 
 // Decrease the total amount of account by 1;
@@ -46,6 +47,8 @@ void UserAccount::createAccount()
 	{
 		cout << "ERROR: Username already exists. Choose a different name.\n";
 		checkFile.close();
+		UserAccount::accountNumber--; //decrement account number since account creation failed
+		UserAccount::numOfAccounts--; //decrement number of accounts since account creation failed
 		return;
 	}
 
@@ -53,7 +56,7 @@ void UserAccount::createAccount()
 	ofstream outFile("Users/" + userFileName, ios::app);
 	if (outFile.is_open()) 
 	{
-		outFile << UserAccount::getAccountID() << "," 
+		outFile << UserAccount::getAccountNumber() << "," 
 			<< username << "," 
 			<< password << ","
 			<< name << ","
@@ -69,10 +72,10 @@ void UserAccount::createAccount()
 	}
 
 	// Create a new file in the Transactions directory "user_<accountID>.txt"
-	ofstream transFile("Transactions/user_" + to_string(UserAccount::getAccountID()) + ".txt");
+	ofstream transFile("Transactions/user_" + to_string(UserAccount::getAccountNumber()) + ".txt");
 	if (transFile.is_open()) 
 	{
-		transFile << "Account Created for " << name << " with Account ID: " << UserAccount::getAccountID() << endl;
+		transFile << "Account Created for " << name << " with Account ID: " << UserAccount::getAccountNumber() << endl;
 	}
 	else 
 	{
@@ -122,7 +125,6 @@ bool UserAccount::login(const string& username, const string& password)
 	// Fill this temp object with real values from file so that it can be used after login
 	user = User(fileName, fileUser, filePass);
 	accountType = acctType;
-	accountNumber = id;
 	account = BankAccount(bal, id);
 	inFile.close();
 
@@ -133,33 +135,29 @@ bool UserAccount::login(const string& username, const string& password)
 void UserAccount::deleteAccount() const
 {
 	string userFileName = "Users/" + user.getUserName() + ".txt";
+
 	// Delete the user file
 	if (remove(userFileName.c_str()) != 0) 
 	{
 		cerr << "Error deleting user file." << endl;
 	}
-	else 
-	{
-		cout << "User file deleted successfully." << endl;
-	}
+
 
 	// Delete the transaction file
-	string transFileName = "Transactions/user_" + to_string(accountNumber) + ".txt";
+	string transFileName = "Transactions/user_" + to_string(accountID) + ".txt";
 	if (remove(transFileName.c_str()) != 0) 
 	{
 		cerr << "Error deleting transaction file." << endl;
 	}
-	else 
-	{
-		cout << "Transaction file deleted successfully." << endl;
-	}
+
+	cout << "Account deleted successfully." << endl;
 }
 
+// Update the account data in the user file after a transaction
 void UserAccount::refreshAccountData()
 {
 	string userFileName = user.getUserName() + ".txt";
 	string fullPath = "Users/" + userFileName;
-	cout << "Refreshing account data from file: " << userFileName << endl;
 	ifstream inFile(fullPath, std::ios::in);
 	if (!inFile.is_open()) 
 	{
@@ -186,13 +184,6 @@ void UserAccount::refreshAccountData()
 
 	inFile.close();
 
-	cout << idStr << ","
-		 << userStr << ","
-		 << passStr << ","
-		 << nameStr << ","
-		 << typeStr << ","
-		 << newBal << endl;
-
     // Rewrite the line with updated balance
     ofstream outFile(fullPath, ios::out | ios::trunc);
     if (!outFile.is_open()) {
@@ -209,14 +200,21 @@ void UserAccount::refreshAccountData()
 
     outFile.close();
 
-    cout << "Account data refreshed with new balance: " << newBal << endl;
+    cout << "Total balance: " << newBal << endl;
 }
 
 void UserAccount::print() const
 {
 	cout << "---- User Account Information ----" << endl;
 	cout << "Account Number: " << accountNumber << endl;
+	cout << "Account Type: " << accountType << endl;
 	
+	// Polymorphism demonstration
+	Person *p;
+	p = new User(user);
+	p->print();
+	delete p;
+	cout << "Account Balance: " << account.getBalance() << endl;
 }
 
 // Getters and setters
@@ -225,14 +223,14 @@ unsigned int UserAccount::getNumofAccounts()
 	return numOfAccounts;
 }
 
-int UserAccount::getAccountID()
-{
-	return accountID;
-}
-
-unsigned int UserAccount::getAccountNumber() const
+unsigned int UserAccount::getAccountNumber()
 {
 	return accountNumber;
+}
+
+unsigned int UserAccount::getAccountID() const
+{
+	return accountID;
 }
 
 

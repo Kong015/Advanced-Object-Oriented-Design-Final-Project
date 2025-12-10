@@ -36,13 +36,13 @@ int main()
 				while (bankingOption != 6)
 				{
 
-					cout << "---- Banking Menu ----" << endl;
+					cout << "\n---- Banking Menu ----" << endl;
 					cout << "1. Deposit" << endl;
 					cout << "2. Withdraw" << endl;
 					cout << "3. Delete Account" << endl;
 					cout << "4. Print Account Information" << endl;
 					cout << "5. Print Account Summary" << endl;
-					cout << "6. Logout" << endl;
+					cout << "6. Logout\n" << endl;
 					cin >> bankingOption;
 
 					switch (bankingOption)
@@ -53,7 +53,6 @@ int main()
 						double amount;
 						cin >> amount;
 						temp.deposit(amount);
-						cout << temp.getBalance() << endl;
 						temp.refreshAccountData();
 						break;
 					}
@@ -69,6 +68,7 @@ int main()
 					case 3:
 					{
 						temp.deleteAccount();
+						bankingOption = 6; // logout after deleting account
 						break;
 					}
 					case 4:
@@ -111,11 +111,15 @@ int main()
 
 			User newUser(name, username, password);
 
-			cout << "Account Type: ";
+			cout << "Account Type (Checking/Savings): ";
 			string accountType;
 			cin >> accountType;
 
-			UserAccount newAccount(accountType, 0.0, newUser);
+			cout << "How much would you like to deposit initially? ";
+			double initialDeposit;
+			cin >> initialDeposit;
+
+			UserAccount newAccount(accountType, initialDeposit, newUser);
 			newAccount.createAccount();
 
 			break;
@@ -166,10 +170,10 @@ int main()
 
 void bankingPrompt()
 {
-	cout << "---- Login Menu ----" << endl;
+	cout << "\n---- Login Menu ----" << endl;
 	cout << "1. User Login" << endl;
 	cout << "2. Create Account" << endl;
 	cout << "3. Manager Login" << endl;
-	cout << "4. Exit" << endl;
+	cout << "4. Exit\n" << endl;
 }
 
