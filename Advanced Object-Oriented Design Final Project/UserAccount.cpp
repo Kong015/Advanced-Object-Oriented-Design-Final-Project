@@ -24,7 +24,7 @@ UserAccount::UserAccount(string accType, double bal, User u) :
 // Decrease the total amount of account by 1;
 UserAccount::~UserAccount()
 {
-	numOfAccounts--;
+
 }
 
 // Program Functions
@@ -65,6 +65,8 @@ void UserAccount::createAccount()
 			<< account.getBalance() << endl;
 
 		outFile.close();
+
+		numOfAccounts++;  // Increment number of accounts
 		cout << "Account Created Successfully!" << endl;
 	}
 	else 
@@ -125,6 +127,7 @@ bool UserAccount::login(const string& username, const string& password)
 
 	// Fill this temp object with real values from file so that it can be used after login
 	user = User(fileName, fileUser, filePass);
+	accountID = id;
 	accountType = acctType;
 	account = BankAccount(bal, id);
 	inFile.close();
@@ -151,6 +154,7 @@ void UserAccount::deleteAccount() const
 		cerr << "Error deleting transaction file." << endl;
 	}
 
+	numOfAccounts--; // Decrement number of accounts
 	cout << "Account deleted successfully." << endl;
 }
 
@@ -207,7 +211,7 @@ void UserAccount::refreshAccountData()
 void UserAccount::print() const
 {
 	cout << "---- User Account Information ----" << endl;
-	cout << "Account Number: " << accountNumber << endl;
+	cout << "Account ID: " << accountID << endl;
 	cout << "Account Type: " << accountType << endl;
 	
 	// Polymorphism demonstration
