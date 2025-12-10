@@ -16,7 +16,6 @@ BankAccount::BankAccount()
 
 BankAccount::BankAccount(const BankAccount& other) 
 {
-    
     balance = other.balance;
     id = other.id;
 }

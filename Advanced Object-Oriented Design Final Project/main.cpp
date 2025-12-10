@@ -1,16 +1,17 @@
 #include "UserAccount.h"
+#include "Manager.h"
 #include <fstream>
 #include <iostream>
 
 void bankingPrompt();
+void managerConsolePrint();
+void managerConsole();
 
 int main() 
 {
 	int userinput = 0;
-	bool loginSuccess = false;
-	bool isManager = false;
 
-	while (userinput != 4 && loginSuccess == false) 
+	while (userinput != 4) 
 	{
 		bankingPrompt();
 		cin >> userinput;
@@ -138,17 +139,22 @@ int main()
 			string filePassword;
 			ifstream inFile("Managers.txt");
 			// Manager.txt file format: username,password
-			while (inFile.is_open()) {
+
+			bool loginSuccess = false;
+			while (inFile.is_open()) 
+			{
 				getline(inFile, fileUsername, ',');
 				getline(inFile, filePassword);
-				if (username == fileUsername && password == filePassword) {
+				if (username == fileUsername && password == filePassword) 
+				{
 					cout << "Login Successful!" << endl;
+					managerConsole();
 					loginSuccess = true;
-					isManager = true;
 					break;
 				}
 			}
-			if (!loginSuccess) {
+			if (!loginSuccess) 
+			{
 				cout << "Login Failed!" << endl;
 			}
 			inFile.close();
@@ -177,3 +183,58 @@ void bankingPrompt()
 	cout << "4. Exit\n" << endl;
 }
 
+void managerConsolePrint() 
+{
+	cout << "---- Manager Console ----" << endl;
+	cout << "1. View all User Information" << endl;
+	cout << "2. View account name of user" << endl;
+	cout << "3. View account type of user" << endl;
+	cout << "4. View account balance of user" << endl;
+	cout << "5. Logout" << endl;
+}
+
+void managerConsole() 
+{
+	int managerOption = 0;
+	string customer;
+	Manager admin("Admin", "Manager", "Password123"); // Basic Manager Object to call functions
+	while (managerOption != 5) 
+	{
+		managerConsolePrint();
+		cin >> managerOption;
+		switch (managerOption) 
+		{
+		case 1:
+			// View all User Information
+			cout << "Enter Username of Customer: ";
+			cin >> customer;
+			admin.printUserInfo(customer);
+
+			break;
+		case 2:
+			// View account name of user
+			cout << "Enter Username of Customer: ";
+			cin >> customer;
+			admin.printUserName(customer);
+			break;
+		case 3:
+			// View account type of user
+			cout << "Enter Username of Customer: ";
+			cin >> customer;
+			admin.printUserAccountType(customer);
+			break;
+		case 4:
+			// View account balance of user
+			cout << "Enter Username of Customer: ";
+			cin >> customer;
+			admin.printUserBalance(customer);
+			break;
+		case 5:
+			cout << "Logging out of Manager Console" << endl;
+			break;
+		default:
+			cout << "Invalid option" << endl;
+			break;
+		}
+	}
+}
