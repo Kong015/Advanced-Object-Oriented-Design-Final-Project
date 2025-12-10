@@ -3,24 +3,26 @@
 #include <iostream>
 #include <string>
 
-BankAccount::BankAccount(double b, int id) {
-    std::cout << "Constructor" << std::endl;
+BankAccount::BankAccount(double b, int id) 
+{    
     balance = b;
     this->id = id;
 }
 
-BankAccount::BankAccount() {
-    std::cout << "Default Constructor" << std::endl;
+BankAccount::BankAccount() 
+{    
     balance = 0.0;
 }
 
-BankAccount::BankAccount(const BankAccount& other) {
-    std::cout << "Copy Constructor" << std::endl;
+BankAccount::BankAccount(const BankAccount& other) 
+{
+    
     balance = other.balance;
     id = other.id;
 }
 
-void BankAccount::Withdraw(double v) {
+void BankAccount::Withdraw(double v) 
+{
     if (v > balance) 
     {
         std::cerr << "Insufficient funds for withdrawal." << std::endl;

@@ -12,6 +12,7 @@ public:
 	// Constructors and Destructors 
 	User();
 	User(string name, string username,  string password);
+	User(const User& other);
 
 	// Program Functions
 	void print() const;

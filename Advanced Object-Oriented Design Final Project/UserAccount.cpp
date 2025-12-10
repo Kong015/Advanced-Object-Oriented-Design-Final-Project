@@ -214,11 +214,9 @@ void UserAccount::refreshAccountData()
 
 void UserAccount::print() const
 {
-	cout << accountNumber << endl;
-	cout << user.getName() << endl;
-	cout << accountType << endl;
-	cout << account.getBalance() << endl;
-	user.print();
+	cout << "---- User Account Information ----" << endl;
+	cout << "Account Number: " << accountNumber << endl;
+	
 }
 
 // Getters and setters
