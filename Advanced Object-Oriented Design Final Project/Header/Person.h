@@ -13,6 +13,7 @@ private:
 public:
     // Constructors and Destructors 
     Person(string name);
+    virtual ~Person();
 
     // Getters and setters
     string getName() const;

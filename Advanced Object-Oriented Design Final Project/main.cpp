@@ -2,31 +2,31 @@
 #include "Manager.h"
 #include <fstream>
 #include <iostream>
+#include <limits>
 
 void bankingPrompt();
 void managerConsolePrint();
 void managerConsole();
+int getInteger(const string& prompt);
+double getDouble(const string& prompt);
+string getString(const string& prompt);
+string getLineString(const string& prompt);
+string getAccountType(const string& prompt);
 
 int main() 
 {
 	int userinput = 0;
-	bool managerLogin = false; // to track if manager login is successful
 	
 	while (userinput != 4) 
 	{
 		bankingPrompt();
-		cin >> userinput;
+		userinput = getInteger("Select an option (1-4): ");
 		switch (userinput)
 		{
 		case 1:
 		{
-			cout << "Username: ";
-			string username;
-			cin >> username;
-
-			cout << "Password: ";
-			string password;
-			cin >> password;
+			string username = getString("Username: ");
+			string password = getString("Password: ");
 
 			UserAccount temp;  // empty object used a UserAccount that holds the value of the txt file if login is successful
 			if (temp.login(username, password))
@@ -45,24 +45,20 @@ int main()
 					cout << "4. Print Account Information" << endl;
 					cout << "5. Print Account Summary" << endl;
 					cout << "6. Logout\n" << endl;
-					cin >> bankingOption;
+					bankingOption = getInteger("Select an option (1-6): ");
 
 					switch (bankingOption)
 					{
 					case 1:
 					{
-						cout << "Enter amount to deposit: ";
-						double amount;
-						cin >> amount;
+						double amount = getDouble("Enter amount to deposit: ");
 						temp.deposit(amount);
 						temp.refreshAccountData();
 						break;
 					}
 					case 2:
 					{
-						cout << "Enter amount to withdraw: ";
-						double amount;
-						cin >> amount;
+						double amount = getDouble("Enter amount to withdraw: ");
 						temp.withdraw(amount);
 						temp.refreshAccountData();
 						break;
@@ -98,28 +94,22 @@ int main()
 		}
 		case 2:
 		{
+			// Clear input buffer before taking string inputs
+			// Need Only for getline which name uses or else it will count \n from userinput after pressing enter
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 			// Create a new User object with the provided information
-			cout << "Name: ";
-			string name;
-			cin >> name;
+			string name = getLineString("Name: ");
 
-			cout << "Username: ";
-			string username;
-			cin >> username;
+			string username = getString("Username: ");
 
-			cout << "Password: ";
-			string password;
-			cin >> password;
+			string password = getString("Password: ");
 
 			User newUser(name, username, password);
 
-			cout << "Account Type (Checking/Savings): ";
-			string accountType;
-			cin >> accountType;
+			string accountType = getAccountType("Account Type (Checkings/Savings): ");
 
-			cout << "How much would you like to deposit initially? ";
-			double initialDeposit;
-			cin >> initialDeposit;
+			double initialDeposit = getDouble("How much would you like to deposit initially: ");
 
 			UserAccount newAccount(accountType, initialDeposit, newUser);
 			newAccount.createAccount();
@@ -128,14 +118,14 @@ int main()
 		}
 		case 3:
 		{
+			bool managerLogin = false; // to track if manager login is successful
+
+
 			// Prompt the manager for their login information
 			// Read Managers.txt file and verify login information
-			string username;
-			string password;
-			cout << "Enter Username: ";
-			cin >> username;
-			cout << "Enter Password: ";
-			cin >> password;
+			string username = getString("Enter Username: ");
+			string password = getString("Enter Password: ");
+			
 			string fileUsername;
 			string filePassword;
 			ifstream inFile("Managers.txt");
@@ -207,32 +197,28 @@ void managerConsole()
 	while (managerOption != 5) 
 	{
 		managerConsolePrint();
-		cin >> managerOption;
+		managerOption = getInteger("\nSelect an option (1-5): ");
 		switch (managerOption) 
 		{
 		case 1:
 			// View all User Information
-			cout << "Enter Username of Customer: ";
-			cin >> customer;
+			customer = getString("Enter Username of Customer: ");
 			admin.printUserInfo(customer);
 
 			break;
 		case 2:
 			// View account name of user
-			cout << "Enter Username of Customer: ";
-			cin >> customer;
+			customer = getString("Enter Username of Customer: ");
 			admin.printUserName(customer);
 			break;
 		case 3:
 			// View account type of user
-			cout << "Enter Username of Customer: ";
-			cin >> customer;
+			customer = getString("Enter Username of Customer: ");
 			admin.printUserAccountType(customer);
 			break;
 		case 4:
 			// View account balance of user
-			cout << "Enter Username of Customer: ";
-			cin >> customer;
+			customer = getString("Enter Username of Customer: ");
 			admin.printUserBalance(customer);
 			break;
 		case 5:
@@ -241,6 +227,115 @@ void managerConsole()
 		default:
 			cout << "Invalid option" << endl;
 			break;
+		}
+	}
+}
+
+
+int getInteger(const string& prompt)
+{
+    int value;
+    while (true)
+    {
+        cout << prompt;
+
+		// Input validation
+        if (!(cin >> value)) //
+        {
+            cout << "Invalid input. Enter a number.\n";
+            cin.clear(); // resets error flag
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard invalid input
+            continue;
+        }
+
+        if (value <= 0)
+        {
+            cout << "Please enter a positive number.\n";
+            continue;
+        }
+
+        return value;
+    }
+}
+
+double getDouble(const string& prompt)
+{
+    double value;
+    while (true)
+    {
+        cout << prompt;
+        if (!(cin >> value))
+        {
+            cout << "Invalid input. Enter a numeric value.\n";
+            cin.clear(); // resets error flag
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // discard invalid input
+            continue;
+        }
+
+        if (value <= 0.0)
+        {
+            cout << "Amount must be positive.\n";
+            continue;
+        }
+
+        return value;
+    }
+}
+
+string getString(const string& prompt)
+{
+    string input;
+    while (true)
+    {
+        cout << prompt;
+        cin >> input;   // reads a single word safely
+		
+
+        if (input.empty())
+        {
+            cout << "Input cannot be empty. Try again.\n";
+            continue;
+        }
+
+        return input;
+    }
+}
+
+// Function to get a full line string input (name with spaces)
+string getLineString(const string& prompt)
+{
+	string input;
+	while (true)
+	{
+		cout << prompt;
+		getline(cin, input);   // reads an entire line
+
+		if (input.empty())
+		{
+			cout << "Input cannot be empty. Try again.\n";
+			continue;
+		}
+
+		return input;
+	}
+}
+
+string getAccountType(const string& prompt)
+{
+	string input;
+	while (true)
+	{
+		cout << prompt;
+		cin >> input;
+
+		if (input == "Checkings" || input == "Savings")
+		{
+			return input;
+		}
+		else
+		{
+			cout << "Invalid account type. Please enter 'Checking' or 'Savings'.\n";
+			continue;
 		}
 	}
 }

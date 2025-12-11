@@ -6,6 +6,10 @@ Person::Person(string n) : name(n)
 
 }
 
+Person::~Person()
+{
+
+}
 
 // Getters and Setters
 string Person::getName() const

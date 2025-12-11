@@ -12,6 +12,7 @@ BankAccount::BankAccount(double b, int id)
 BankAccount::BankAccount() 
 {    
     balance = 0.0;
+    id = 0;
 }
 
 BankAccount::BankAccount(const BankAccount& other) 
@@ -22,6 +23,12 @@ BankAccount::BankAccount(const BankAccount& other)
 
 void BankAccount::Withdraw(double v) 
 {
+     if (v <= 0) 
+     {
+        std::cerr << "Withdrawal amount must be positive." << std::endl;
+        return;
+    }
+
     if (v > balance) 
     {
         std::cerr << "Insufficient funds for withdrawal." << std::endl;
@@ -34,14 +41,22 @@ void BankAccount::Withdraw(double v)
         outFile << "Withdraw of " << v << " successful! New balance: " << balance << std::endl;
         outFile.close();
     }
-    else {
+    else 
+    {
         std::cerr << "Unable to open file for writing." << std::endl;
     }
-
 }
 
 void BankAccount::Deposit(double v) 
 {
+    // Validate deposit amount
+    if (v <= 0) 
+    {
+        std::cerr << "Enter Valid Positive Amount" << std::endl;
+        return;
+    }
+
+
     std::ofstream outFile("Transactions/user_" + std::to_string(id) + ".txt", std::ios::app);
     if (outFile.is_open()) {
         balance += v;

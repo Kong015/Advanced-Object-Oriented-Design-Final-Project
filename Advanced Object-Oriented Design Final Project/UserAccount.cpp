@@ -47,7 +47,6 @@ void UserAccount::createAccount()
 	{
 		cout << "ERROR: Username already exists. Choose a different name.\n";
 		checkFile.close();
-		UserAccount::accountNumber--; //decrement account number since account creation failed
 		return;
 	}
 
@@ -115,7 +114,13 @@ bool UserAccount::login(const string& username, const string& password)
 	string acctType = line.substr(pos4 + 1, pos5 - pos4 - 1);
 	string balStr   = line.substr(pos5 + 1);
 
-	if (password != filePass) {
+	if (username != fileUser) 
+	{
+		cout << "Login Failed! Username mismatch" << endl;
+		return false;
+	}
+	if (password != filePass) 
+	{
 		cout << "Login Failed! Incorrect password" << endl;
 		return false;
 	}
