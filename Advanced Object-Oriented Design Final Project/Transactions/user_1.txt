@@ -1,0 +1,4 @@
+Account Created for Bryce with Account ID: 1
+Deposit of 100 successful! New balance: 100
+Deposit of 150 successful! New balance: 250
+Withdraw of 20 successful! New balance: 230
