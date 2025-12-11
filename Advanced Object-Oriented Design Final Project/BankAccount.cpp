@@ -70,6 +70,7 @@ void BankAccount::Deposit(double v)
 
 void BankAccount::PrintAccountSummary() const 
 {
+    std::cout << "---- Account Summary ----" << std::endl;
     std::ifstream inFile("Transactions/user_" + std::to_string(id) + ".txt", std::ios::in);
     if (inFile.is_open()) {
         std::string line;

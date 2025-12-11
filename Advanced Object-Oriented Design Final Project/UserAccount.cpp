@@ -49,6 +49,7 @@ void UserAccount::createAccount()
 		return;
 	}
 
+
 	//assign accountID
 	accountNumber++; // increment static account number
 	accountID = accountNumber; // unique account number
@@ -88,6 +89,11 @@ void UserAccount::createAccount()
 		cerr << "Unable to create transaction file." << endl;
 	}
 	transFile.close();
+
+	// set initial balance = 0 and use deposit function to log transaction
+	int initialBalance = account.getBalance();
+	account.setBalance(0.0); // set balance to 0 for initial deposit transaction
+	deposit(initialBalance); // log initial deposit transaction
 }
 
 bool UserAccount::login(const string& username, const string& password)
@@ -141,7 +147,7 @@ bool UserAccount::login(const string& username, const string& password)
 	account = BankAccount(bal, id);
 	inFile.close();
 
-	cout << "Login Successful!\n";
+
 	return true;
 }
 
@@ -220,7 +226,7 @@ void UserAccount::refreshAccountData()
 
 void UserAccount::saveCounters()
 {
-    ofstream outFile("Users/counters.txt", ios::trunc);
+    ofstream outFile("counters.txt", ios::trunc);
     if (outFile.is_open())
     {
         outFile << accountNumber << " " << numOfAccounts;
@@ -230,7 +236,7 @@ void UserAccount::saveCounters()
 
 void UserAccount::loadCounters()
 {
-    ifstream inFile("Users/counters.txt");
+    ifstream inFile("counters.txt");
     if (inFile.is_open())
     {
         inFile >> accountNumber >> numOfAccounts;

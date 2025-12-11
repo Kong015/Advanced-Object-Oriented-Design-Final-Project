@@ -33,7 +33,7 @@ int main()
 			UserAccount temp;  // empty object used a UserAccount that holds the value of the txt file if login is successful
 			if (temp.login(username, password))
 			{
-
+				cout << "Login Successful!\n";
 				// After user logs in successfully, present them with their banking options
 				int bankingOption = 0;
 
@@ -182,14 +182,14 @@ void bankingPrompt()
 
 void managerConsolePrint() 
 {
-	cout << "---- Manager Console ----" << endl;
+	cout << "\n---- Manager Console ----" << endl;
 	cout << "1. View Usernames of all Users" << endl;
 	cout << "2. View all User Information" << endl;
 	cout << "3. View account name of user" << endl;
 	cout << "4. View account type of user" << endl;
 	cout << "5. View account balance of user" << endl;
 	cout << "6. View transaction history of user" << endl;
-	cout << "7. Logout" << endl;
+	cout << "7. Logout\n" << endl;
 }
 
 void managerConsole() 
@@ -208,36 +208,33 @@ void managerConsole()
 			break;
 		case 2:
 			// View all User Information
-			cout << "Enter Username of Customer: ";
-			cin >> customer;
+			
+			customer = getString("Enter Username of Customer: ");
 			admin.printUserInfo(customer);
 
 			break;
 		case 3:
 			// View account name of user
-			cout << "Enter Username of Customer: ";
-			cin >> customer;
+			customer = getString("Enter Username of Customer: ");
 			admin.printUserName(customer);
 			break;
 		case 4:
 			// View account type of user
-			cout << "Enter Username of Customer: ";
-			cin >> customer;
+			customer = getString("Enter Username of Customer: ");
 			admin.printUserAccountType(customer);
 			break;
 		case 5:
 			// View account balance of user
-			cout << "Enter Username of Customer: ";
-			cin >> customer;
+			customer = getString("Enter Username of Customer: ");
 			admin.printUserBalance(customer);
 			break;
 		case 6: {
 			// View transaction history of user
-			cout << "Enter account to see transaction history: ";
-			cin >> customer;
+			customer = getString("Enter Username of Customer: ");
 			string userpassword = admin.printCustomerPassword(customer);
 			UserAccount temp;
-			if (temp.login(customer, userpassword)) {
+			if (temp.login(customer, userpassword)) 
+			{
 				temp.printAccountSummary();
 			}
 			break;
