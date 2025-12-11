@@ -15,6 +15,7 @@ string getAccountType(const string& prompt);
 
 int main() 
 {
+	UserAccount::loadCounters();
 	int userinput = 0;
 	
 	while (userinput != 4) 

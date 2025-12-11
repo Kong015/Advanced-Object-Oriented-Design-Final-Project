@@ -25,13 +25,15 @@ public:
 
 	// Program Functions
 	void createAccount();
-	void refreshAccountData();
+	void refreshAccountData(); // update user file after transaction
 	void deleteAccount(); 
 	void deposit(double amount);
 	void withdraw(double amount);
 	void printAccountSummary() const;
 	bool login(const string& username, const string& password);
 	void print() const;
+	static void saveCounters(); // save static counters to file
+	static void loadCounters(); // load static counters from file
 
 	// Getters and setters
 	static unsigned int getNumofAccounts();

@@ -70,6 +70,7 @@ void UserAccount::createAccount()
 
 		numOfAccounts++;  // Increment number of accounts
 		cout << "Account Created Successfully!" << endl;
+		saveCounters(); // save updated static counters to file
 	}
 	else 
 	{
@@ -164,6 +165,7 @@ void UserAccount::deleteAccount()
 
 	numOfAccounts--; // Decrement number of accounts
 	cout << "Account deleted successfully." << endl;
+	saveCounters(); // save updated static counters to file
 }
 
 // Update the account data in the user file after a transaction
@@ -214,6 +216,32 @@ void UserAccount::refreshAccountData()
     outFile.close();
 
     cout << "Total balance: " << newBal << endl;
+}
+
+void UserAccount::saveCounters()
+{
+    ofstream outFile("Users/counters.txt", ios::trunc);
+    if (outFile.is_open())
+    {
+        outFile << accountNumber << " " << numOfAccounts;
+        outFile.close();
+    }
+}
+
+void UserAccount::loadCounters()
+{
+    ifstream inFile("Users/counters.txt");
+    if (inFile.is_open())
+    {
+        inFile >> accountNumber >> numOfAccounts;
+        inFile.close();
+    }
+    else
+    {
+        // First run or file missing
+        accountNumber = 0;
+        numOfAccounts = 0;
+    }
 }
 
 void UserAccount::print() const
