@@ -53,8 +53,8 @@ void Manager::printUserInfo(string customer) const {
             index++;
         }
 
-        for (int i = 0; i < fieldCount; i++) {
-            if (i == 2) continue;   // Skip password
+        for (int i = 0; i < fieldCount; i++) 
+        {
             cout << fields[i] << endl;
         }
         delete[] fields;
