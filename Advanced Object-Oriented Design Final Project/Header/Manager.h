@@ -12,11 +12,12 @@ class Manager : public Person {
         string getUserName() const;
         string getPassword() const;
         void print() const override;
-        void readAccountsFromFile(const string& filename);
+        void readAccountsFromFile();
         void printUserInfo(string customer) const;
         void printUserName(string customer) const;
         void printUserAccountType(string customer) const;
         void printUserBalance(string customer) const;
+        string printCustomerPassword(string customer) const;
         
 
 };

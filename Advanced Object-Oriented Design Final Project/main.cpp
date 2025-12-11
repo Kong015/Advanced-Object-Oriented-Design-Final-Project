@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <limits>
+#include <sstream>
 
 void bankingPrompt();
 void managerConsolePrint();
@@ -129,27 +130,26 @@ int main()
 			
 			string fileUsername;
 			string filePassword;
+			
 			ifstream inFile("Managers.txt");
 			// Manager.txt file format: username,password
-
-			while (inFile.is_open()) 
+			string line;
+			while (getline(inFile, line)) 
 			{
-				getline(inFile, fileUsername, ',');
-				getline(inFile, filePassword);
+    			stringstream ss(line);
+    			string fileUsername, filePassword;
+
+				getline(ss, fileUsername, ','); // before comma
+				getline(ss, filePassword, ','); // after comma
+
 				if (username == fileUsername && password == filePassword) 
 				{
 					cout << "Login Successful!" << endl;
-					managerConsole();
 					managerLogin = true;
+					managerConsole();
 					break;
 				}
-				else
-				{
-					managerLogin = false;
-					break;
-				}
-				
-			}
+			}	
 			if (!managerLogin) 
 			{
 				cout << "Login Failed!" << endl;
@@ -183,11 +183,13 @@ void bankingPrompt()
 void managerConsolePrint() 
 {
 	cout << "---- Manager Console ----" << endl;
-	cout << "1. View all User Information" << endl;
-	cout << "2. View account name of user" << endl;
-	cout << "3. View account type of user" << endl;
-	cout << "4. View account balance of user" << endl;
-	cout << "5. Logout" << endl;
+	cout << "1. View Usernames of all Users" << endl;
+	cout << "2. View all User Information" << endl;
+	cout << "3. View account name of user" << endl;
+	cout << "4. View account type of user" << endl;
+	cout << "5. View account balance of user" << endl;
+	cout << "6. View transaction history of user" << endl;
+	cout << "7. Logout" << endl;
 }
 
 void managerConsole() 
@@ -195,34 +197,52 @@ void managerConsole()
 	int managerOption = 0;
 	string customer;
 	Manager admin("Admin", "Manager", "Password123"); // Basic Manager Object to call functions
-	while (managerOption != 5) 
+	while (managerOption != 7) 
 	{
 		managerConsolePrint();
-		managerOption = getInteger("\nSelect an option (1-5): ");
-		switch (managerOption) 
-		{
+		managerOption = getInteger("Select an option (1-7): ");
+		switch (managerOption) {
 		case 1:
+			// View Usernames of all Users
+			admin.readAccountsFromFile();
+			break;
+		case 2:
 			// View all User Information
-			customer = getString("Enter Username of Customer: ");
+			cout << "Enter Username of Customer: ";
+			cin >> customer;
 			admin.printUserInfo(customer);
 
 			break;
-		case 2:
+		case 3:
 			// View account name of user
-			customer = getString("Enter Username of Customer: ");
+			cout << "Enter Username of Customer: ";
+			cin >> customer;
 			admin.printUserName(customer);
 			break;
-		case 3:
+		case 4:
 			// View account type of user
-			customer = getString("Enter Username of Customer: ");
+			cout << "Enter Username of Customer: ";
+			cin >> customer;
 			admin.printUserAccountType(customer);
 			break;
-		case 4:
+		case 5:
 			// View account balance of user
-			customer = getString("Enter Username of Customer: ");
+			cout << "Enter Username of Customer: ";
+			cin >> customer;
 			admin.printUserBalance(customer);
 			break;
-		case 5:
+		case 6: {
+			// View transaction history of user
+			cout << "Enter account to see transaction history: ";
+			cin >> customer;
+			string userpassword = admin.printCustomerPassword(customer);
+			UserAccount temp;
+			if (temp.login(customer, userpassword)) {
+				temp.printAccountSummary();
+			}
+			break;
+		}
+		case 7:
 			cout << "Logging out of Manager Console" << endl;
 			break;
 		default:

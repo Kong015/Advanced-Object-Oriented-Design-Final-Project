@@ -255,6 +255,7 @@ void UserAccount::print() const
 	p = new User(user);
 	p->print();
 	delete p;
+	
 	cout << "Account Balance: " << account.getBalance() << endl;
 }
 

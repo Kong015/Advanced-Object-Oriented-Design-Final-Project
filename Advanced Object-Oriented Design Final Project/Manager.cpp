@@ -3,8 +3,9 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <filesystem>
 using namespace std;
-
+namespace fs = std::filesystem;
 
 Manager::Manager(string name, string userName, string password)
     : Person(name), userName(userName), password(password) {}
@@ -187,4 +188,56 @@ void Manager::printUserBalance(string customer) const {
     }
 
     inFile.close();
+}
+
+void Manager::readAccountsFromFile() {
+    string folderPath = "Users";  // your folder name
+
+    // Loop through all items in the folder
+    for (const auto& entry : fs::directory_iterator(folderPath)) {
+
+        // Skip directories, only process files
+        if (entry.is_regular_file()) {
+
+            ifstream file(entry.path());
+            if (!file) {
+                cout << "Could not open file.\n";
+                continue;
+            }
+
+            // Read the contents of the file
+            string fileName = entry.path().stem().string();
+            cout << "Account Username: " << fileName << endl;
+
+            file.close();
+        }
+    }
+
+}
+
+string Manager::printCustomerPassword(string customer) const {
+    string fileName = customer + ".txt";   // automatically add .txt
+    string fullPath = "Users/" + fileName;
+    ifstream inFile(fullPath);
+    if (!inFile.is_open()) {
+        cerr << "Error: could not open file " << fileName << endl;
+        return "";
+    }
+
+    string line;
+    getline(inFile, line);   // read the entire line
+
+    stringstream ss(line);
+    string item;
+
+    // 1st entry 
+    getline(ss, item, ',');
+
+    // 2nd entry
+    getline(ss, item, ',');
+
+    // 3rd entry → return this
+    getline(ss, item, ',');
+
+    return item;
 }

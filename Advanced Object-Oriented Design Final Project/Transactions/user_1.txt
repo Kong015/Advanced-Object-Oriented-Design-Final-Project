@@ -1,1 +1,3 @@
 Account Created for a with Account ID: 1
+Deposit of 2000 successful! New balance: 2500
+Withdraw of 200 successful! New balance: 2300
