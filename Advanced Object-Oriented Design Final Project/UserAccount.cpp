@@ -15,9 +15,8 @@ UserAccount::UserAccount() :
 UserAccount::UserAccount(string accType, double bal, User u) :
 	accountType(accType), user(u)
 {
-	accountNumber++;
-	accountID = accountNumber;
-	account = BankAccount(bal, accountID);
+	accountID = 0;
+	account = BankAccount(bal, 0);
 }
 
 // Decrease the total amount of account by 1;
@@ -49,6 +48,12 @@ void UserAccount::createAccount()
 		checkFile.close();
 		return;
 	}
+
+	//assign accountID
+	accountNumber++; // increment static account number
+	accountID = accountNumber; // unique account number
+	account.setID(accountID); // set the BankAccount id to match UserAccount id
+
 
 	//create user file	
 	ofstream outFile("Users/" + userFileName, ios::app);
