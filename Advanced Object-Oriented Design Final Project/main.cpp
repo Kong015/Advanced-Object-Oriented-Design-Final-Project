@@ -352,7 +352,7 @@ string getAccountType(const string& prompt)
 		}
 		else
 		{
-			cout << "Invalid account type. Please enter 'Checking' or 'Savings'.\n";
+			cout << "Invalid account type. Please enter 'Checkings' or 'Savings'.\n";
 			continue;
 		}
 	}
